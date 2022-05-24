@@ -23,19 +23,29 @@ class Core():
         self._callback_on_move = None
         self._callback_on_click = None
 
+        self._recording = False
+        self._last_record_events = []
+
+        self._mcontroller = mouse.Controller()
         self._mlistener = mouse.Listener(
             on_move=self._on_move,
             on_click=self._on_click,
             on_scroll=self._on_scroll
         )
 
+        self._kcontroller = keyboard.Controller()
         self._klistener = keyboard.Listener(
             on_press=self._on_press,
             on_release=self._on_release
         )
         
+        logger.info("starting_devices")
         self._mlistener.start()
         self._klistener.start()
+
+        self._mlistener.wait()
+        self._klistener.wait()
+        logger.info("devices_ready")
 
     def set_mouse_callbacks(self, on_scroll=None, on_press=None, on_release=None):
         self._callback_on_scroll = on_scroll
@@ -53,6 +63,9 @@ class Core():
 
     def _on_click(self, x, y, button, pressed):
         logger.debug("on_click", x=x, y=y, button=button, pressed=pressed)
+        if self._recording:
+            self._last_record_events.append(1)
+
         if self._callback_on_click:
             self._callback_on_click(x=x, y=y, button=button, pressed=pressed)
 
@@ -71,6 +84,23 @@ class Core():
         if self._callback_on_release:
             self._callback_on_release(key=key)
     
+    def start_recording(self):
+        logger.info("start_recording")
+        self._last_record_events = []
+        self._recording = True
+
+    def stop_recording(self):
+        logger.info("stop_recording")
+        self._recording = False
+
+    def start_playback(self):
+        logger.info("start_playback")
+        for action in self._last_record_events:
+            logger.debug("action", action=action)
+
+    def stop_playback(self):
+        logger.info("stop_playback")
+
     def run(self):
         while True:
             pass
