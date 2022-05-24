@@ -1,0 +1,26 @@
+click==8.1.3
+    # via typer
+evdev==1.5.0
+    # via pynput
+imgui==1.4.1
+    # via -r requirements.in
+importlib-metadata==4.11.4
+    # via click
+pynput==1.7.6
+    # via -r requirements.in
+python-xlib==0.31
+    # via pynput
+six==1.16.0
+    # via
+    #   pynput
+    #   python-xlib
+structlog==21.5.0
+    # via -r requirements.in
+typer==0.4.1
+    # via -r requirements.in
+typing-extensions==4.2.0
+    # via
+    #   importlib-metadata
+    #   structlog
+zipp==3.8.0
+    # via importlib-metadata

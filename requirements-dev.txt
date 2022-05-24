@@ -1,0 +1,270 @@
+alabaster==0.7.12
+    # via sphinx
+astroid==2.11.5
+    # via pylint
+attrs==21.4.0
+    # via pytest
+babel==2.10.1
+    # via sphinx
+bandit==1.7.4
+    # via -r requirements-dev.in
+black==22.3.0
+    # via -r requirements-dev.in
+bleach==5.0.0
+    # via readme-renderer
+bump2version==1.0.1
+    # via -r requirements-dev.in
+certifi==2022.5.18.1
+    # via requests
+cffi==1.15.0
+    # via cryptography
+charset-normalizer==2.0.12
+    # via requests
+click==8.1.3
+    # via
+    #   -r requirements.txt
+    #   black
+    #   pip-tools
+    #   safety
+    #   typer
+colorama==0.4.4
+    # via radon
+commonmark==0.9.1
+    # via
+    #   recommonmark
+    #   rich
+coverage[toml]==6.4
+    # via
+    #   -r requirements-dev.in
+    #   pytest-cov
+cryptography==37.0.2
+    # via secretstorage
+cython==0.29.30
+    # via -r requirements-dev.in
+dill==0.3.5.1
+    # via pylint
+docutils==0.17.1
+    # via
+    #   readme-renderer
+    #   recommonmark
+    #   sphinx
+    #   sphinx-rtd-theme
+dparse==0.5.1
+    # via safety
+evdev==1.5.0
+    # via
+    #   -r requirements.txt
+    #   pynput
+future==0.18.2
+    # via radon
+gitdb==4.0.9
+    # via gitpython
+gitpython==3.1.27
+    # via bandit
+idna==3.3
+    # via requests
+imagesize==1.3.0
+    # via sphinx
+imgui==1.4.1
+    # via -r requirements.txt
+importlib-metadata==4.11.4
+    # via
+    #   -r requirements.txt
+    #   click
+    #   keyring
+    #   markdown
+    #   pep517
+    #   pluggy
+    #   pytest
+    #   sphinx
+    #   stevedore
+    #   twine
+iniconfig==1.1.1
+    # via pytest
+isort==5.10.1
+    # via pylint
+jeepney==0.8.0
+    # via
+    #   keyring
+    #   secretstorage
+jinja2==3.1.2
+    # via sphinx
+keyring==23.5.1
+    # via twine
+lazy-object-proxy==1.7.1
+    # via astroid
+mando==0.6.4
+    # via radon
+markdown==3.3.7
+    # via sphinx-markdown-tables
+markupsafe==2.1.1
+    # via jinja2
+mccabe==0.7.0
+    # via pylint
+mypy-extensions==0.4.3
+    # via black
+packaging==21.3
+    # via
+    #   dparse
+    #   pytest
+    #   safety
+    #   sphinx
+pathspec==0.9.0
+    # via black
+pbr==5.9.0
+    # via stevedore
+pep517==0.12.0
+    # via pip-tools
+pip-tools==6.6.2
+    # via -r requirements-dev.in
+pkginfo==1.8.2
+    # via twine
+platformdirs==2.5.2
+    # via
+    #   black
+    #   pylint
+pluggy==1.0.0
+    # via pytest
+py==1.11.0
+    # via pytest
+pycodestyle==2.8.0
+    # via -r requirements-dev.in
+pycparser==2.21
+    # via cffi
+pygments==2.12.0
+    # via
+    #   readme-renderer
+    #   rich
+    #   sphinx
+pylint==2.13.9
+    # via -r requirements-dev.in
+pynput==1.7.6
+    # via -r requirements.txt
+pyparsing==3.0.9
+    # via packaging
+pytest==7.1.2
+    # via
+    #   -r requirements-dev.in
+    #   pytest-cov
+    #   pytest-html
+    #   pytest-metadata
+pytest-cov==3.0.0
+    # via -r requirements-dev.in
+pytest-html==3.1.1
+    # via -r requirements-dev.in
+pytest-metadata==2.0.1
+    # via pytest-html
+python-xlib==0.31
+    # via
+    #   -r requirements.txt
+    #   pynput
+pytz==2022.1
+    # via babel
+pyyaml==6.0
+    # via
+    #   bandit
+    #   dparse
+radon==5.1.0
+    # via -r requirements-dev.in
+readme-renderer==35.0
+    # via twine
+recommonmark==0.7.1
+    # via -r requirements-dev.in
+requests==2.27.1
+    # via
+    #   requests-toolbelt
+    #   safety
+    #   sphinx
+    #   twine
+requests-toolbelt==0.9.1
+    # via twine
+rfc3986==2.0.0
+    # via twine
+rich==12.4.4
+    # via twine
+safety==1.10.3
+    # via -r requirements-dev.in
+secretstorage==3.3.2
+    # via keyring
+six==1.16.0
+    # via
+    #   -r requirements.txt
+    #   bleach
+    #   mando
+    #   pynput
+    #   python-xlib
+smmap==5.0.0
+    # via gitdb
+snowballstemmer==2.2.0
+    # via sphinx
+sphinx==4.5.0
+    # via
+    #   -r requirements-dev.in
+    #   recommonmark
+    #   sphinx-rtd-theme
+sphinx-markdown-tables==0.0.15
+    # via -r requirements-dev.in
+sphinx-rtd-theme==1.0.0
+    # via -r requirements-dev.in
+sphinxcontrib-applehelp==1.0.2
+    # via sphinx
+sphinxcontrib-devhelp==1.0.2
+    # via sphinx
+sphinxcontrib-htmlhelp==2.0.0
+    # via sphinx
+sphinxcontrib-jsmath==1.0.1
+    # via sphinx
+sphinxcontrib-qthelp==1.0.3
+    # via sphinx
+sphinxcontrib-serializinghtml==1.1.5
+    # via sphinx
+stevedore==3.5.0
+    # via bandit
+structlog==21.5.0
+    # via -r requirements.txt
+toml==0.10.2
+    # via dparse
+tomli==2.0.1
+    # via
+    #   black
+    #   coverage
+    #   pep517
+    #   pylint
+    #   pytest
+twine==4.0.0
+    # via -r requirements-dev.in
+typed-ast==1.5.4
+    # via
+    #   astroid
+    #   black
+typer==0.4.1
+    # via -r requirements.txt
+typing-extensions==4.2.0
+    # via
+    #   -r requirements.txt
+    #   astroid
+    #   black
+    #   gitpython
+    #   importlib-metadata
+    #   pylint
+    #   rich
+    #   structlog
+urllib3==1.26.9
+    # via
+    #   requests
+    #   twine
+webencodings==0.5.1
+    # via bleach
+wheel==0.37.1
+    # via pip-tools
+wrapt==1.14.1
+    # via astroid
+zipp==3.8.0
+    # via
+    #   -r requirements.txt
+    #   importlib-metadata
+    #   pep517
+
+# The following packages are considered to be unsafe in a requirements file:
+# pip
+# setuptools
