@@ -32,8 +32,11 @@ def main():
     typer.echo(f"Running {__file__}")
 
     core = Core()
-    core.set_mouse_callbacks(on_scroll, on_key, on_key)
-    core.set_keyboard_callbacks(on_move, on_click)
+    core.set_mouse_callbacks(on_scroll=on_scroll,
+                             on_press=on_key,
+                             on_release=on_key)
+    core.set_keyboard_callbacks(on_move=on_move,
+                                on_click=on_click)
     core.run()
 
 

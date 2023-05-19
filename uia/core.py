@@ -10,6 +10,7 @@ from uia.entities import (
     Scroll,
     Key
 )
+from uia.session import Session
 from pynput import mouse
 from pynput import keyboard
 
@@ -30,7 +31,7 @@ class Core():
         self._callback_on_click = None
 
         self._recording = False
-        self._last_record_events = []
+        self._session = Session()
 
         self._mcontroller = mouse.Controller()
         self._mlistener = mouse.Listener(
@@ -71,11 +72,13 @@ class Core():
     def _on_click(self, x, y, button, pressed):
         click = Click(x=x, y=y, button=button, pressed=pressed)
         logger.debug("on_click", **click.dict())
-        if self._recording:
-            self._last_record_events.append(click)
-
+        
         if self._callback_on_click:
             self._callback_on_click(click)
+        
+        if self._recording:
+            self._session.append(click)
+
 
     def _on_scroll(self, x, y, dx, dy):
         scroll = Scroll(x=x, y=y, dx=dx, dy=dy)
@@ -88,6 +91,9 @@ class Core():
         logger.debug("on_press", **key.dict())
         if self._callback_on_press:
             self._callback_on_press(key=key)
+        
+        if self._recording:
+            self._session.append(key)
 
     def _on_release(self, keyid):
         key = Key(key=keyboard.KeyCode.from_char(keyid), pressed=False)
@@ -97,7 +103,6 @@ class Core():
     
     def start_recording(self):
         logger.info("start_recording")
-        self._last_record_events = []
         self._recording = True
 
     def stop_recording(self):
@@ -106,12 +111,21 @@ class Core():
 
     def start_playback(self):
         logger.info("start_playback")
-        for action in self._last_record_events:
-            logger.debug("action", action=action)
+        #for action in self._last_record_events:
+        #    logger.debug("action", action=action)
 
     def stop_playback(self):
         logger.info("stop_playback")
 
+    def import_session(self, filename: str = "session.json"):
+        logger.info("import_session", filename=filename)
+        self._session.import_from_file(filename)
+
+    def export_session(self, filename: str = "session.json"):
+        logger.info("export_session", filename=filename)
+        self._session.export_to_file(filename)
+
     def run(self):
+        logger.info("running_session")
         while True:
             pass

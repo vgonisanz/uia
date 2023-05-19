@@ -1,9 +1,10 @@
-from pydantic import BaseModel
 import typing
+
+from pydantic import BaseModel
 from pynput import mouse
 from pynput import keyboard
 
-
+   
 class Move(BaseModel):
     x: int = 0
     y: int = 0
@@ -32,3 +33,9 @@ class Key(BaseModel):
 
     class Config:
         arbitrary_types_allowed = True
+
+
+class Event(BaseModel):
+    type: str
+    value: typing.Union["Move", "uia.entities.Click", "Scroll", "Key"]
+ 

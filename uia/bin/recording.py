@@ -1,5 +1,5 @@
 """
-Play a macro to your keyboard and mouse
+Pay a macro to your keyboard and mouse
 """
 import time
 import typer
@@ -13,14 +13,14 @@ import structlog
 logger = structlog.get_logger(__file__)
 
 
-def main(filename: str = "session.json"):
+def main():
     typer.echo(f"Running {__file__}")
 
     core = Core()
-    core.import_session(filename)
-    core.start_playback()
-    #core.run()
-    # TODO: Always todoamedias
+    core.start_recording()
+    time.sleep(3)
+    core.stop_recording()
+    core.export_session("session.json")
 
 
 if __name__ == "__main__":
