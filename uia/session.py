@@ -22,9 +22,11 @@ class Session():
         """
         Export the current session to a file
         """
+        data = [obj.dict() for obj in self._last_record_events]
+
         with open(filename, 'w') as f:
             for event in self._last_record_events:
-                json.dump(event.json(), f)
+                json.dump(data, f, indent=4, sort_keys=False)
     
     def import_to_file(self, filename):
         """
