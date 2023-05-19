@@ -4,6 +4,12 @@ Core of the project to manage all Input devices
 import structlog
 
 
+from uia.entities import (
+    Move,
+    Click,
+    Scroll,
+    Key
+)
 from pynput import mouse
 from pynput import keyboard
 
@@ -57,30 +63,35 @@ class Core():
         self._callback_on_click = on_click
 
     def _on_move(self, x, y):
-        logger.debug("on_move", x=x, y=y)
+        move = Move(x=x, y=y)
+        logger.debug("on_move", **move.dict())
         if self._callback_on_move:
-            self._callback_on_move(x=x, y=y)
+            self._callback_on_move(move)
 
     def _on_click(self, x, y, button, pressed):
-        logger.debug("on_click", x=x, y=y, button=button, pressed=pressed)
+        click = Click(x=x, y=y, button=button, pressed=pressed)
+        logger.debug("on_click", **click.dict())
         if self._recording:
-            self._last_record_events.append(1)
+            self._last_record_events.append(click)
 
         if self._callback_on_click:
-            self._callback_on_click(x=x, y=y, button=button, pressed=pressed)
+            self._callback_on_click(click)
 
     def _on_scroll(self, x, y, dx, dy):
-        logger.debug("on_scroll", x=x, y=y, dx=dx, dy=dy)
+        scroll = Scroll(x=x, y=y, dx=dx, dy=dy)
+        logger.debug("on_scroll", **scroll.dict())
         if self._callback_on_scroll:
-            self._callback_on_scroll(x=x, y=y, dx=dx, dy=dy)
+            self._callback_on_scroll(scroll)
 
-    def _on_press(self, key):
-        logger.debug("on_press", key=key)
+    def _on_press(self, keyid):
+        key = Key(key=keyboard.KeyCode.from_char(keyid), pressed=True)
+        logger.debug("on_press", **key.dict())
         if self._callback_on_press:
             self._callback_on_press(key=key)
 
-    def _on_release(self, key):
-        logger.debug("on_press", key=key)
+    def _on_release(self, keyid):
+        key = Key(key=keyboard.KeyCode.from_char(keyid), pressed=False)
+        logger.debug("on_press", **key.dict())
         if self._callback_on_release:
             self._callback_on_release(key=key)
     

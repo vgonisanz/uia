@@ -12,31 +12,27 @@ import structlog
 logger = structlog.get_logger(__file__)
 
 
-def on_scroll(x, y, dx, dy):
-    logger.info("on_scroll", x=x, y=y, dx=dx, dy=dy)
+def on_scroll(scroll):
+    logger.info("on_scroll", **scroll.dict())
 
 
-def on_press(key):
-    logger.info("on_press", key=key)
+def on_key(key):
+    logger.info("on_key", **key.dict())
 
 
-def on_release(key):
-    logger.info("on_press", key=key)
+def on_move(move):
+    logger.info("on_move", **move.dict())
 
 
-def on_move(x, y):
-    logger.info("on_move", x=x, y=y)
-
-
-def on_click(x, y, button, pressed):
-    logger.info("on_click", x=x, y=y, button=button, pressed=pressed)
+def on_click(click):
+    logger.info("on_click", **click.dict())
 
 
 def main():
     typer.echo(f"Running {__file__}")
 
     core = Core()
-    core.set_mouse_callbacks(on_scroll, on_press, on_release)
+    core.set_mouse_callbacks(on_scroll, on_key, on_key)
     core.set_keyboard_callbacks(on_move, on_click)
     core.run()
 
