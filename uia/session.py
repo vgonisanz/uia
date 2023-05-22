@@ -1,7 +1,11 @@
+import sys
 import json
 import structlog
 
-from pydantic import BaseModel
+from pydantic import BaseModel, create_model
+
+from pynput import mouse
+from pynput import keyboard
 from pydantic.json import pydantic_encoder
 from uia.entities import Event
 
@@ -16,6 +20,8 @@ class Session():
     """
     def __init__(self):
         self._last_record_events = []
+        self._mcontroller = mouse.Controller()
+        self._kcontroller = keyboard.Controller()
     
     def append(self, element):
         name = element.__class__.__name__
@@ -24,10 +30,14 @@ class Session():
 
         event = Event(name=name,
                       value=element)
-        logger.debug("element", **element.dict())
-        logger.debug("event", **event.dict())
         self._last_record_events.append(event)
    
+    def run(self):
+        for event in self._last_record_events:
+            logger.debug("run_event", **event.dict())
+            self._mcontroller.click(event.value.button)
+
+
     def clear(self):
         self._last_record_events.clear()
 
@@ -39,13 +49,21 @@ class Session():
             json.dump(self._last_record_events, f,
                       indent=4, sort_keys=False, default=pydantic_encoder)   
     
-    def import_to_file(self, filename):
+    def import_from_file(self, filename):
         """
         Import a session from a file
         """
-        #Something like this to create from text-scratch objects
-        #class_name = element.__class__.__name__
-        #model_class = type(class_name, (BaseModel,), element.dict())
+        self.clear()
         with open(filename, 'r') as f:
-            data = json.load(f)
+            json_data = json.load(f)
+            for item in json_data:
+                class_name = item['name']
+                model_class = getattr(sys.modules["uia.entities"], class_name, None)
+                if model_class:
+                    instance = model_class(**item['value'])
+                    event = Event(name=class_name, value=instance)
+                    self._last_record_events.append(event)
+                else:
+                    logger.warning("model_class_not_recognized", class_name=class_name)
+        logger.info("imported_session", len=len(self._last_record_events))
         

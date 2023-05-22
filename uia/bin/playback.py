@@ -19,7 +19,6 @@ def main(filename: str = "session.json"):
     core = Core()
     core.import_session(filename)
     core.start_playback()
-    #core.run()
     # TODO: Always todoamedias
 
 

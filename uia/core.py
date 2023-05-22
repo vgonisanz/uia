@@ -34,14 +34,12 @@ class Core():
         self._recording = False
         self._session = Session()
 
-        self._mcontroller = mouse.Controller()
         self._mlistener = mouse.Listener(
             on_move=self._on_move,
             on_click=self._on_click,
             on_scroll=self._on_scroll
         )
 
-        self._kcontroller = keyboard.Controller()
         self._klistener = keyboard.Listener(
             on_press=self._on_press,
             on_release=self._on_release
@@ -114,8 +112,7 @@ class Core():
 
     def start_playback(self):
         logger.info("start_playback")
-        #for action in self._last_record_events:
-        #    logger.debug("action", action=action)
+        self._session.run()
 
     def stop_playback(self):
         logger.info("stop_playback")
@@ -127,8 +124,3 @@ class Core():
     def export_session(self, filename: str = "session.json"):
         logger.info("export_session", filename=filename)
         self._session.export_to_file(filename)
-
-    def run(self):
-        logger.info("running_session")
-        while True:
-            pass
