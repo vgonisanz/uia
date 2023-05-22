@@ -1,20 +1,25 @@
 import typing
+from enum import Enum
+
 
 from pydantic import BaseModel
 from pynput import mouse
 from pynput import keyboard
 
-   
-class Move(BaseModel):
-    x: int = 0
-    y: int = 0
+
+class ButtonState(Enum):
+    RELEASED = 0
+    PRESSED = 1
+
+class Position(BaseModel):
+    x: int
+    y: int
 
 
 class Click(BaseModel):
+    position: Position = Position(x=0, y=0)
     button: mouse.Button = mouse.Button.left
-    pressed: bool = False
-    x: int = 0
-    y: int = 0
+    state: ButtonState = ButtonState.RELEASED
 
 
 class Scroll(BaseModel):
@@ -36,6 +41,6 @@ class Key(BaseModel):
 
 
 class Event(BaseModel):
-    type: str
-    value: typing.Union["Move", "uia.entities.Click", "Scroll", "Key"]
+    name: str
+    value: typing.Union["Position", "Click", "Scroll", "Key"]
  

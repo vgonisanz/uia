@@ -5,7 +5,8 @@ import structlog
 
 
 from uia.entities import (
-    Move,
+    ButtonState,
+    Position,
     Click,
     Scroll,
     Key
@@ -64,13 +65,15 @@ class Core():
         self._callback_on_click = on_click
 
     def _on_move(self, x, y):
-        move = Move(x=x, y=y)
-        logger.debug("on_move", **move.dict())
+        pos = Position(x=x, y=y)
+        logger.debug("on_move", **pos.dict())
         if self._callback_on_move:
-            self._callback_on_move(move)
+            self._callback_on_move(pos)
 
     def _on_click(self, x, y, button, pressed):
-        click = Click(x=x, y=y, button=button, pressed=pressed)
+        click = Click(position=Position(x=x, y=y),
+                      button=button,
+                      state=ButtonState(pressed))
         logger.debug("on_click", **click.dict())
         
         if self._callback_on_click:
