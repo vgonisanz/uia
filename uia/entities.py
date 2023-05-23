@@ -12,8 +12,8 @@ class ButtonState(Enum):
     PRESSED = 1
 
 class Position(BaseModel):
-    x: int
-    y: int
+    x: int = 0
+    y: int = 0
 
 
 class Click(BaseModel):
@@ -40,7 +40,7 @@ class Key(BaseModel):
         arbitrary_types_allowed = True
 
 
-class Event(BaseModel):
+class Event(BaseModel, smart_union=True):
     name: str
     value: typing.Union["Position", "Click", "Scroll", "Key"]
  

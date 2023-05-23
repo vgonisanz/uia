@@ -67,6 +67,8 @@ class Core():
         logger.debug("on_move", **pos.dict())
         if self._callback_on_move:
             self._callback_on_move(pos)
+        if self._recording:
+            self._session.append(pos)
 
     def _on_click(self, x, y, button, pressed):
         click = Click(position=Position(x=x, y=y),
@@ -80,12 +82,14 @@ class Core():
         if self._recording:
             self._session.append(click)
 
-
     def _on_scroll(self, x, y, dx, dy):
         scroll = Scroll(x=x, y=y, dx=dx, dy=dy)
         logger.debug("on_scroll", **scroll.dict())
         if self._callback_on_scroll:
             self._callback_on_scroll(scroll)
+
+        if self._recording:
+            self._session.append(scroll)
 
     def _on_press(self, keyid):
         key = Key(key=keyboard.KeyCode.from_char(keyid), pressed=True)
