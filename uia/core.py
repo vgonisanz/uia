@@ -31,7 +31,6 @@ class Core():
         self._callback_on_move = None
         self._callback_on_click = None
 
-        self._recording = False
         self._session = Session()
 
         self._mlistener = mouse.Listener(
@@ -67,8 +66,7 @@ class Core():
         logger.debug("on_move", **pos.dict())
         if self._callback_on_move:
             self._callback_on_move(pos)
-        if self._recording:
-            self._session.append(pos)
+        self._session.append(pos)
 
     def _on_click(self, x, y, button, pressed):
         click = Click(position=Position(x=x, y=y),
@@ -79,8 +77,7 @@ class Core():
         if self._callback_on_click:
             self._callback_on_click(click)
         
-        if self._recording:
-            self._session.append(click)
+        self._session.append(click)
 
     def _on_scroll(self, x, y, dx, dy):
         scroll = Scroll(x=x, y=y, dx=dx, dy=dy)
@@ -88,8 +85,7 @@ class Core():
         if self._callback_on_scroll:
             self._callback_on_scroll(scroll)
 
-        if self._recording:
-            self._session.append(scroll)
+        self._session.append(scroll)
 
     def _on_press(self, keyid):
         key = Key(key=keyboard.KeyCode.from_char(keyid), pressed=True)
@@ -97,8 +93,7 @@ class Core():
         if self._callback_on_press:
             self._callback_on_press(key=key)
         
-        if self._recording:
-            self._session.append(key)
+        self._session.append(key)
 
     def _on_release(self, keyid):
         key = Key(key=keyboard.KeyCode.from_char(keyid), pressed=False)
@@ -106,13 +101,14 @@ class Core():
         if self._callback_on_release:
             self._callback_on_release(key=key)
     
+        self._session.append(key)
+    
+
     def start_recording(self):
-        logger.info("start_recording")
-        self._recording = True
+        self._session.start_recording()
 
     def stop_recording(self):
-        logger.info("stop_recording")
-        self._recording = False
+        self._session.stop_recording()
 
     def start_playback(self):
         logger.info("start_playback")

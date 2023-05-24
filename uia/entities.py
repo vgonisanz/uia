@@ -43,4 +43,5 @@ class Key(BaseModel):
 class Event(BaseModel, smart_union=True):
     name: str
     value: typing.Union["Position", "Click", "Scroll", "Key"]
+    timestamp: float
  
