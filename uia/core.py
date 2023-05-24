@@ -112,7 +112,7 @@ class Core():
 
     def start_playback(self):
         logger.info("start_playback")
-        self._session.run()
+        self._session.start_playback()
 
     def stop_playback(self):
         logger.info("stop_playback")

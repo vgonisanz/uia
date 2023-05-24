@@ -1,4 +1,5 @@
 import sys
+import asyncio
 import time
 import json
 
@@ -23,6 +24,8 @@ class Session():
         self._events = []
         self._granularity = 3   # ms in timestamp by design
         self._recording = False
+        self.running = False
+        self._repeat = False
         self._start_timestamp = time.time()
         self._mcontroller = mouse.Controller()
         self._kcontroller = keyboard.Controller()
@@ -52,18 +55,44 @@ class Session():
                       timestamp=self._calculate_relative_timestamp())
         self._events.append(event)
    
-    def run(self):
-        for event in self._events:
-            logger.debug("run_event", **event.dict())
-            if event.name == "Position":
-                self._mcontroller.position = (event.value.x, event.value.y)
-            if event.name == "Click":
-                self._mcontroller.click(event.value.button)
-            if event.name == "Scroll":
-                self._mcontroller.scroll(event.value.dx, event.value.dy)
-            if event.name == "Key":
-                print("key_todo")
+    def start_playback(self):
+        logger.info("start_playback")
+        asyncio.ensure_future(self._run())
+        asyncio.get_event_loop().run_until_complete(asyncio.sleep(3))
+        self.stop_playback()
+        logger.info("start_playback_finished")
 
+    async def _run(self):
+        logger.info("_run")
+        self.running = True
+        while self.running:
+            logger.info("_run_loop")
+            self._start_timestamp = time.time()
+            for event in self._events:
+                while event.timestamp > self._calculate_relative_timestamp(): 
+                    await asyncio.sleep(pow(10, -self._granularity))
+                self._trigger_event(event)
+                if not self.running:
+                    break
+            
+            if not self._repeat:
+                self.stop_playback()
+        logger.info("_run_loop_finished")
+    
+    def _trigger_event(self, event):
+        logger.debug("run_event", **event.dict())
+        if event.name == "Position":
+            self._mcontroller.position = (event.value.x, event.value.y)
+        if event.name == "Click":
+            self._mcontroller.click(event.value.button)
+        if event.name == "Scroll":
+            self._mcontroller.scroll(event.value.dx, event.value.dy)
+        if event.name == "Key":
+            print("key_todo")
+
+    def stop_playback(self):
+        logger.info("stop_playback")
+        self.running = False
 
     def clear(self):
         logger.debug("clear_session")
